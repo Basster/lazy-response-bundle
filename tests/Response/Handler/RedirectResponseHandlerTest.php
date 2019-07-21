@@ -6,6 +6,7 @@ namespace Basster\LazyResponseBundle\Tests\Response\Handler;
 use Basster\LazyResponseBundle\Response\Handler\AbstractLazyResponseHandler;
 use Basster\LazyResponseBundle\Response\Handler\RedirectResponseHandler;
 use Basster\LazyResponseBundle\Response\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -15,11 +16,17 @@ use Symfony\Component\Routing\RouterInterface;
  */
 final class RedirectResponseHandlerTest extends AbstractLazyResponseHandlerTest
 {
+    private const ROUTE_NAME = 'homepage';
+    private const ROUTE_PARAMS = [];
+
     private $router;
 
     protected function setUp(): void
     {
         $this->router = $this->prophesize(RouterInterface::class);
+        $this->router->generate(self::ROUTE_NAME, self::ROUTE_PARAMS)
+            ->willReturn('http://localhost/')
+        ;
         parent::setUp();
     }
 
@@ -28,18 +35,42 @@ final class RedirectResponseHandlerTest extends AbstractLazyResponseHandlerTest
      */
     public function generateRouteFromControllerResult(): void
     {
-        $routeName = 'homepage';
-        $routeParams = [];
+        $controllerResult = new RedirectResponse(self::ROUTE_NAME, self::ROUTE_PARAMS);
 
-        $controllerResult = new RedirectResponse($routeName, $routeParams);
-        $event = $this->createViewEvent($controllerResult);
-
-        $this->router->generate($routeName, $routeParams)
+        $this->router
+            ->generate(self::ROUTE_NAME, self::ROUTE_PARAMS)
             ->shouldBeCalled()
-            ->willReturn('http://localhost/')
         ;
 
+        $event = $this->createViewEvent($controllerResult);
         $this->handler->handleLazyResponse($event);
+    }
+
+    /**
+     * @test
+     */
+    public function generateTemporaryRedirect(): void
+    {
+        $controllerResult = new RedirectResponse(self::ROUTE_NAME, self::ROUTE_PARAMS, true);
+
+        $event = $this->createViewEvent($controllerResult);
+        $this->handler->handleLazyResponse($event);
+
+        self::assertSame(Response::HTTP_MOVED_PERMANENTLY, $event->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function passHeadersToRedirectResponse(): void
+    {
+        $headers = ['X-Foo' => 'bar'];
+        $controllerResult = new RedirectResponse(self::ROUTE_NAME, self::ROUTE_PARAMS, false, $headers);
+
+        $event = $this->createViewEvent($controllerResult);
+        $this->handler->handleLazyResponse($event);
+
+        self::assertSame($headers['X-Foo'], $event->getResponse()->headers->get('X-Foo'));
     }
 
     protected function getHandlerClassName(): string

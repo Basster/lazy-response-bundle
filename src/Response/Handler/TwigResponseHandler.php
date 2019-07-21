@@ -11,7 +11,7 @@ use Twig\Environment;
 /**
  * Class TemplateResponseHandler.
  */
-final class TemplateResponseHandler extends AbstractLazyResponseHandler
+final class TwigResponseHandler extends AbstractLazyResponseHandler
 {
     /**
      * @var \Twig\Environment
