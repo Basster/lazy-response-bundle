@@ -1,6 +1,8 @@
 Lazy Response Bundle
 =====================
 
+[![Build Status](https://scrutinizer-ci.com/g/Basster/lazy-response-bundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Basster/lazy-response-bundle/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Basster/lazy-response-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Basster/lazy-response-bundle/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/Basster/lazy-response-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Basster/lazy-response-bundle/?branch=master) 
+
 I prefer to handle response type outside of Symfony controllers and return DTOs instead which are transformed into their corresponding responses afterwards. Some of the very standard DTOs and `kernel.view` event handlers are in this library.
 
 Installation
