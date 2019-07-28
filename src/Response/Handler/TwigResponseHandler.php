@@ -29,7 +29,7 @@ final class TwigResponseHandler extends AbstractLazyResponseHandler
     }
 
     /**
-     * @param \Basster\LazyResponseBundle\Response\TemplateResponse|LazyResponseInterface $controllerResult
+     * @param LazyResponseInterface|TemplateResponse $controllerResult
      *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError

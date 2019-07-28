@@ -25,7 +25,7 @@ final class JsonSerializeResponseHandler extends AbstractLazyResponseHandler
     }
 
     /**
-     * @param \Basster\LazyResponseBundle\Response\JsonSerializeResponse|LazyResponseInterface $controllerResult
+     * @param JsonSerializeResponse|LazyResponseInterface $controllerResult
      */
     protected function generateResponse(LazyResponseInterface $controllerResult): Response
     {

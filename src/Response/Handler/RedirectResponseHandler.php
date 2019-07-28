@@ -30,7 +30,7 @@ final class RedirectResponseHandler extends AbstractLazyResponseHandler
     }
 
     /**
-     * @param \Basster\LazyResponseBundle\RedirectResponse|LazyResponseInterface $controllerResult
+     * @param LazyResponseInterface|RedirectResponse $controllerResult
      */
     protected function generateResponse(LazyResponseInterface $controllerResult): Response
     {
