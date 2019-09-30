@@ -28,7 +28,7 @@ abstract class AbstractLazyResponseHandlerTest extends TestCase
      */
     public function subscribesKernelViewEvent(): void
     {
-        $events = \call_user_func($this->getHandlerClassName() . '::getSubscribedEvents');
+        $events = $this->getHandlerClassName()::getSubscribedEvents();
         self::assertArrayHasKey('kernel.view', $events);
     }
 

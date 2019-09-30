@@ -71,7 +71,6 @@ return Config::create()
                  'no_alternative_syntax'                         => true,
                  'php_unit_set_up_tear_down_visibility'          => true,
                  'phpdoc_trim_consecutive_blank_line_separation' => true,
-                 'no_superfluous_phpdoc_tags'                    => true,
                  'return_assignment'                             => true,
                  'php_unit_test_case_static_method_calls'        => ['call_type' => 'self'],
                  'php_unit_test_annotation'                      => ['style' => 'annotation'],

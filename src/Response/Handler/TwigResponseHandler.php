@@ -29,7 +29,9 @@ final class TwigResponseHandler extends AbstractLazyResponseHandler
     }
 
     /**
-     * @param LazyResponseInterface|TemplateResponse $controllerResult
+     * @param TemplateResponse $controllerResult
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError

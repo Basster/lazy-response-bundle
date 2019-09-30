@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class TemplateResponse.
  */
-final class TemplateResponse implements LazyResponseInterface
+final class TemplateResponse extends AbstractLazyHttpResponse
 {
     /**
      * @var string
@@ -20,32 +20,11 @@ final class TemplateResponse implements LazyResponseInterface
      */
     private $data;
 
-    /**
-     * @var int
-     */
-    private $status;
-
-    /**
-     * @var array
-     */
-    private $headers;
-
     public function __construct(string $template, array $data, int $status = Response::HTTP_OK, array $headers = [])
     {
+        parent::__construct($status, $headers);
         $this->template = $template;
         $this->data = $data;
-        $this->status = $status;
-        $this->headers = $headers;
-    }
-
-    public function getStatus(): int
-    {
-        return $this->status;
-    }
-
-    public function getHeaders(): array
-    {
-        return $this->headers;
     }
 
     public function getTemplate(): string

@@ -13,4 +13,6 @@ before_script:
   - phpenv config-add travis.php.ini
   - composer update --prefer-source -o --no-interaction
 
-script: vendor/bin/phpunit -c phpunit.xml.dist
+script:
+    - composer run-script psalm
+    - vendor/bin/phpunit -c phpunit.xml.dist
