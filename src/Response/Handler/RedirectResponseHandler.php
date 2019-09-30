@@ -30,7 +30,9 @@ final class RedirectResponseHandler extends AbstractLazyResponseHandler
     }
 
     /**
-     * @param LazyResponseInterface|RedirectResponse $controllerResult
+     * @param RedirectResponse $controllerResult
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     protected function generateResponse(LazyResponseInterface $controllerResult): Response
     {
@@ -38,7 +40,7 @@ final class RedirectResponseHandler extends AbstractLazyResponseHandler
             $this->router->generate(
                 $controllerResult->getRouteName(),
                 $controllerResult->getRouteParams()
-          ),
+            ),
             $controllerResult->getStatusCode(),
             $controllerResult->getHeaders()
         );

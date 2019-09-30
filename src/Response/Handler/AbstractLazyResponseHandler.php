@@ -33,6 +33,11 @@ abstract class AbstractLazyResponseHandler implements EventSubscriberInterface
 
     abstract protected function generateResponse(LazyResponseInterface $controllerResult): Response;
 
+    /**
+     * @param mixed $controllerResult
+     *
+     * @return bool
+     */
     private function isSupportedLazyResponse($controllerResult): bool
     {
         return $controllerResult instanceof LazyResponseInterface && $this->isSupported($controllerResult);

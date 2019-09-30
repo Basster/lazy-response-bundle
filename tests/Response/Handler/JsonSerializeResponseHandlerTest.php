@@ -36,6 +36,34 @@ final class JsonSerializeResponseHandlerTest extends AbstractLazyResponseHandler
         $this->serializer->serialize($data, 'json')->shouldHaveBeenCalled();
     }
 
+    /**
+     * @test
+     */
+    public function passStatusCodeToResponse(): void
+    {
+        $created = 201;
+        $controllerResult = new JsonSerializeResponse([], $created);
+        $event = $this->createViewEvent($controllerResult);
+
+        $this->handler->handleLazyResponse($event);
+
+        self::assertSame($created, $event->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function passHeadersToResponse(): void
+    {
+        $headers = ['X-Foo' => 'bar'];
+        $controllerResult = new JsonSerializeResponse([], 200, $headers);
+        $event = $this->createViewEvent($controllerResult);
+
+        $this->handler->handleLazyResponse($event);
+
+        self::assertSame($headers['X-Foo'], $event->getResponse()->headers->get('X-Foo'));
+    }
+
     protected function getHandlerClassName(): string
     {
         return JsonSerializeResponseHandler::class;

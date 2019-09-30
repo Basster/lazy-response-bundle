@@ -25,11 +25,17 @@ final class JsonSerializeResponseHandler extends AbstractLazyResponseHandler
     }
 
     /**
-     * @param JsonSerializeResponse|LazyResponseInterface $controllerResult
+     * @param JsonSerializeResponse $controllerResult
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     protected function generateResponse(LazyResponseInterface $controllerResult): Response
     {
-        return new JsonResponse($this->serializer->serialize($controllerResult->getData(), 'json'));
+        return new JsonResponse(
+            $this->serializer->serialize($controllerResult->getData(), 'json'),
+            $controllerResult->getStatus(),
+            $controllerResult->getHeaders(),
+        );
     }
 
     protected function isSupported(LazyResponseInterface $controllerResult): bool
