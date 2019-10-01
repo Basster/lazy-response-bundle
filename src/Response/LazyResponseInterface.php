@@ -9,4 +9,5 @@ namespace Basster\LazyResponseBundle\Response;
  */
 interface LazyResponseInterface
 {
+    public function getStatusCode(): int;
 }
