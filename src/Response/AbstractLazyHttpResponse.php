@@ -38,4 +38,9 @@ abstract class AbstractLazyHttpResponse implements LazyResponseInterface
     {
         return $this->headers;
     }
+
+    public function getStatusCode(): int
+    {
+        return $this->getStatus();
+    }
 }
