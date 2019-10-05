@@ -29,9 +29,18 @@ abstract class AbstractLazyHttpResponse implements LazyResponseInterface
         $this->headers = $headers;
     }
 
+    /**
+     * @return int
+     * @deprecated will be removed with version 2.0. use getStatusCode instead.
+     */
     public function getStatus(): int
     {
-        return $this->status;
+        @trigger_error(
+            'Using AbstractLazyHttpResponse::getStatus() is deprecated since version 1.2, use "AbstractLazyHttpResponse::getStatusCode()" instead.',
+            E_USER_DEPRECATED
+        );
+
+        return $this->getStatusCode();
     }
 
     public function getHeaders(): array
@@ -41,6 +50,6 @@ abstract class AbstractLazyHttpResponse implements LazyResponseInterface
 
     public function getStatusCode(): int
     {
-        return $this->getStatus();
+        return $this->status;
     }
 }

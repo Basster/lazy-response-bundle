@@ -33,7 +33,7 @@ final class JsonSerializeResponseHandler extends AbstractLazyResponseHandler
     {
         return new JsonResponse(
             $this->serializer->serialize($controllerResult->getData(), 'json'),
-            $controllerResult->getStatus(),
+            $controllerResult->getStatusCode(),
             $controllerResult->getHeaders(),
         );
     }

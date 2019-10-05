@@ -39,6 +39,6 @@ final class TwigResponseHandler extends AbstractLazyResponseHandler
      */
     protected function generateResponse(LazyResponseInterface $controllerResult): Response
     {
-        return new Response($this->twig->render($controllerResult->getTemplate(), $controllerResult->getData()), $controllerResult->getStatus(), $controllerResult->getHeaders());
+        return new Response($this->twig->render($controllerResult->getTemplate(), $controllerResult->getData()), $controllerResult->getStatusCode(), $controllerResult->getHeaders());
     }
 }
