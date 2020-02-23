@@ -29,13 +29,25 @@ final class TwigResponseHandlerTest extends AbstractLazyResponseHandlerTest
     public function renderTwigTemplateFromControllerResult(): void
     {
         $template = 'homepage.html.twig';
-        $data = [];
+        $data = ['foo' => 'bar'];
         $controllerResult = new TemplateResponse($template, $data);
-        $event = $this->createViewEvent($controllerResult);
 
-        $this->handler->handleLazyResponse($event);
+        $this->handleLazyViewResponse($controllerResult);
 
         $this->twig->render($template, $data)->shouldHaveBeenCalled();
+    }
+
+    /**
+     * @test
+     */
+    public function renderTwigTemplateFromControllerResultWithEmptyData(): void
+    {
+        $template = 'homepage.html.twig';
+        $controllerResult = new TemplateResponse($template);
+
+        $this->handleLazyViewResponse($controllerResult);
+
+        $this->twig->render($template, [])->shouldHaveBeenCalled();
     }
 
     /**
@@ -74,5 +86,15 @@ final class TwigResponseHandlerTest extends AbstractLazyResponseHandlerTest
     protected function createHandlerSubject(): AbstractLazyResponseHandler
     {
         return new TwigResponseHandler($this->twig->reveal());
+    }
+
+    /**
+     * @param \Basster\LazyResponseBundle\Response\TemplateResponse $controllerResult
+     */
+    private function handleLazyViewResponse(TemplateResponse $controllerResult): void
+    {
+        $event = $this->createViewEvent($controllerResult);
+
+        $this->handler->handleLazyResponse($event);
     }
 }

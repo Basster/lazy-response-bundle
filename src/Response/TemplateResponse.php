@@ -20,7 +20,7 @@ final class TemplateResponse extends AbstractLazyHttpResponse
      */
     private $data;
 
-    public function __construct(string $template, array $data, int $status = Response::HTTP_OK, array $headers = [])
+    public function __construct(string $template, array $data = [], int $status = Response::HTTP_OK, array $headers = [])
     {
         parent::__construct($status, $headers);
         $this->template = $template;
