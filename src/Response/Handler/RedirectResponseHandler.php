@@ -14,14 +14,8 @@ use Symfony\Component\Routing\RouterInterface;
  */
 final class RedirectResponseHandler extends AbstractLazyResponseHandler
 {
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    private $router;
-
-    public function __construct(RouterInterface $router)
+    public function __construct(private RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     protected function isSupported(LazyResponseInterface $controllerResult): bool

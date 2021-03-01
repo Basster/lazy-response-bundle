@@ -13,14 +13,8 @@ use Twig\Environment;
  */
 final class TwigResponseHandler extends AbstractLazyResponseHandler
 {
-    /**
-     * @var \Twig\Environment
-     */
-    private $twig;
-
-    public function __construct(Environment $twig)
+    public function __construct(private Environment $twig)
     {
-        $this->twig = $twig;
     }
 
     protected function isSupported(LazyResponseInterface $controllerResult): bool

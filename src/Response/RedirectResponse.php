@@ -8,32 +8,8 @@ namespace Basster\LazyResponseBundle\Response;
  */
 final class RedirectResponse implements LazyResponseInterface
 {
-    /**
-     * @var string
-     */
-    private $routeName;
-
-    /**
-     * @var array
-     */
-    private $routeParams;
-
-    /**
-     * @var bool
-     */
-    private $isPermanent;
-
-    /**
-     * @var array
-     */
-    private $headers;
-
-    public function __construct(string $routeName, array $routeParams = [], bool $isPermanent = false, array $headers = [])
+    public function __construct(private string $routeName, private array $routeParams = [], private bool $isPermanent = false, private array $headers = [])
     {
-        $this->routeName = $routeName;
-        $this->routeParams = $routeParams;
-        $this->isPermanent = $isPermanent;
-        $this->headers = $headers;
     }
 
     public function getRouteName(): string

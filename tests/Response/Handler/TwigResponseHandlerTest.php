@@ -6,6 +6,9 @@ namespace Basster\LazyResponseBundle\Tests\Response\Handler;
 use Basster\LazyResponseBundle\Response\Handler\AbstractLazyResponseHandler;
 use Basster\LazyResponseBundle\Response\Handler\TwigResponseHandler;
 use Basster\LazyResponseBundle\Response\TemplateResponse;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Twig\Environment;
 
 /**
@@ -15,11 +18,14 @@ use Twig\Environment;
  */
 final class TwigResponseHandlerTest extends AbstractLazyResponseHandlerTest
 {
-    private $twig;
+    use ProphecyTrait;
+
+    private Environment | ObjectProphecy $twig;
 
     protected function setUp(): void
     {
         $this->twig = $this->prophesize(Environment::class);
+        $this->twig->render(Argument::any(), Argument::cetera())->willReturn('');
         parent::setUp();
     }
 
@@ -88,9 +94,6 @@ final class TwigResponseHandlerTest extends AbstractLazyResponseHandlerTest
         return new TwigResponseHandler($this->twig->reveal());
     }
 
-    /**
-     * @param \Basster\LazyResponseBundle\Response\TemplateResponse $controllerResult
-     */
     private function handleLazyViewResponse(TemplateResponse $controllerResult): void
     {
         $event = $this->createViewEvent($controllerResult);

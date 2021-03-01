@@ -14,6 +14,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 abstract class AbstractLazyResponseHandler implements EventSubscriberInterface
 {
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{'kernel.view': array{0: string}}
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -33,12 +38,7 @@ abstract class AbstractLazyResponseHandler implements EventSubscriberInterface
 
     abstract protected function generateResponse(LazyResponseInterface $controllerResult): Response;
 
-    /**
-     * @param mixed $controllerResult
-     *
-     * @return bool
-     */
-    private function isSupportedLazyResponse($controllerResult): bool
+    private function isSupportedLazyResponse(mixed $controllerResult): bool
     {
         return $controllerResult instanceof LazyResponseInterface && $this->isSupported($controllerResult);
     }

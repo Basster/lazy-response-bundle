@@ -14,14 +14,8 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 final class JsonSerializeResponseHandler extends AbstractLazyResponseHandler
 {
-    /**
-     * @var \Symfony\Component\Serializer\SerializerInterface
-     */
-    private $serializer;
-
-    public function __construct(SerializerInterface $serializer)
+    public function __construct(private SerializerInterface $serializer)
     {
-        $this->serializer = $serializer;
     }
 
     /**
