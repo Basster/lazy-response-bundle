@@ -7,7 +7,9 @@ use Basster\LazyResponseBundle\Response\Handler\AbstractLazyResponseHandler;
 use Basster\LazyResponseBundle\Response\Handler\JsonSerializeResponseHandler;
 use Basster\LazyResponseBundle\Response\JsonSerializeResponse;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -19,11 +21,11 @@ final class JsonSerializeResponseHandlerTest extends AbstractLazyResponseHandler
 {
     use ProphecyTrait;
 
-    private SerializerInterface | ObjectProphecy $serializer;
+    private SerializerInterface $serializer;
 
     protected function setUp(): void
     {
-        $this->serializer = $this->prophesize(SerializerInterface::class);
+        $this->serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
         parent::setUp();
     }
 
@@ -33,11 +35,16 @@ final class JsonSerializeResponseHandlerTest extends AbstractLazyResponseHandler
     public function serializeControllerResultDataWhenSupported(): void
     {
         $data = new class() {
+            public string $foo = 'bar';
         };
         $controllerResult = new JsonSerializeResponse($data);
         $event = $this->createViewEvent($controllerResult);
         $this->handler->handleLazyResponse($event);
-        $this->serializer->serialize($data, 'json')->shouldHaveBeenCalled();
+
+        self::assertJsonStringEqualsJsonString(
+            '{"foo":"bar"}',
+            $event->getResponse()->getContent()
+        );
     }
 
     /**
@@ -75,6 +82,6 @@ final class JsonSerializeResponseHandlerTest extends AbstractLazyResponseHandler
 
     protected function createHandlerSubject(): AbstractLazyResponseHandler
     {
-        return new JsonSerializeResponseHandler($this->serializer->reveal());
+        return new JsonSerializeResponseHandler($this->serializer);
     }
 }

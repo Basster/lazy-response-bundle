@@ -33,7 +33,8 @@
     "friendsofphp/php-cs-fixer": "^2.18",
     "vimeo/psalm": "^4.6",
     "phpunit/phpunit": "^9.5",
-    "phpspec/prophecy-phpunit": "^2.0"
+    "phpspec/prophecy-phpunit": "^2.0",
+    "symfony/property-access": "^5.2"
   },
   "suggest": {
     "symfony/event-dispatcher": "Required when using any of the event handlers.",
