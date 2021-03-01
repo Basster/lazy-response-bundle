@@ -12,11 +12,12 @@ use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * Class AbstractLazyResponseHandlerTest.
+ *
+ * @internal
  */
 abstract class AbstractLazyResponseHandlerTest extends TestCase
 {
-    /** @var AbstractLazyResponseHandler */
-    protected $handler;
+    protected AbstractLazyResponseHandler $handler;
 
     protected function setUp(): void
     {
@@ -44,9 +45,12 @@ abstract class AbstractLazyResponseHandlerTest extends TestCase
         $this->handler->handleLazyResponse($event);
     }
 
+    /**
+     * @psalm-return class-string
+     */
     abstract protected function getHandlerClassName(): string;
 
-    protected function createViewEvent($controllerResult): ViewEvent
+    protected function createViewEvent(object $controllerResult): ViewEvent
     {
         return new ViewEvent(
             $this->createMock(Kernel::class),

@@ -6,6 +6,8 @@ namespace Basster\LazyResponseBundle\Tests\Response\Handler;
 use Basster\LazyResponseBundle\Response\Handler\AbstractLazyResponseHandler;
 use Basster\LazyResponseBundle\Response\Handler\RedirectResponseHandler;
 use Basster\LazyResponseBundle\Response\RedirectResponse;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -16,10 +18,12 @@ use Symfony\Component\Routing\RouterInterface;
  */
 final class RedirectResponseHandlerTest extends AbstractLazyResponseHandlerTest
 {
+    use ProphecyTrait;
+
     private const ROUTE_NAME = 'homepage';
     private const ROUTE_PARAMS = [];
 
-    private $router;
+    private ObjectProphecy | RouterInterface $router;
 
     protected function setUp(): void
     {

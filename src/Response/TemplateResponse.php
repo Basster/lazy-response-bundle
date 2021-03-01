@@ -10,21 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class TemplateResponse extends AbstractLazyHttpResponse
 {
-    /**
-     * @var string
-     */
-    private $template;
-
-    /**
-     * @var array
-     */
-    private $data;
-
-    public function __construct(string $template, array $data = [], int $status = Response::HTTP_OK, array $headers = [])
+    public function __construct(private string $template, private array $data = [], int $status = Response::HTTP_OK, array $headers = [])
     {
         parent::__construct($status, $headers);
-        $this->template = $template;
-        $this->data = $data;
     }
 
     public function getTemplate(): string

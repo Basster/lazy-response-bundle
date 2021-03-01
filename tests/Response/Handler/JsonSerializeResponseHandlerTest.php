@@ -6,6 +6,8 @@ namespace Basster\LazyResponseBundle\Tests\Response\Handler;
 use Basster\LazyResponseBundle\Response\Handler\AbstractLazyResponseHandler;
 use Basster\LazyResponseBundle\Response\Handler\JsonSerializeResponseHandler;
 use Basster\LazyResponseBundle\Response\JsonSerializeResponse;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -15,7 +17,9 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 final class JsonSerializeResponseHandlerTest extends AbstractLazyResponseHandlerTest
 {
-    private $serializer;
+    use ProphecyTrait;
+
+    private SerializerInterface | ObjectProphecy $serializer;
 
     protected function setUp(): void
     {
